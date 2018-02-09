@@ -31,6 +31,8 @@ class MessageCompressionTest {
       codecs += SnappyCompressionCodec
     if (isLZ4Available)
       codecs += LZ4CompressionCodec
+    if (isZStdAvailable)
+      codecs += ZStdCompressionCodec
     for (codec <- codecs)
       testSimpleCompressDecompress(codec)
   }
@@ -52,6 +54,9 @@ class MessageCompressionTest {
 
     if (isLZ4Available)
       testCompressSize(LZ4CompressionCodec, messages, 387)
+
+    if(isZStdAvailable)
+      testCompressSize(ZStdCompressionCodec, messages, 374)
   }
 
   def testSimpleCompressDecompress(compressionCodec: CompressionCodec) {
@@ -79,6 +84,15 @@ class MessageCompressionTest {
   def isLZ4Available: Boolean = {
     try {
       new net.jpountz.lz4.LZ4BlockOutputStream(new ByteArrayOutputStream())
+      true
+    } catch {
+      case _: UnsatisfiedLinkError => false
+    }
+  }
+
+  def isZStdAvailable: Boolean = {
+    try {
+      new com.github.luben.zstd.ZstdOutputStream(new ByteArrayOutputStream(), 1)
       true
     } catch {
       case _: UnsatisfiedLinkError => false

@@ -20,7 +20,7 @@
 ext {
   versions = [:]
   libs = [:]
-  
+
   // Enabled by default when commands like `testAll` are invoked
   defaultScalaVersions = [ '2.11' ]
   // Available if -PscalaVersion is used, this is necessary because Scala 2.12 requires Java 8 while Kafka is usually
@@ -73,7 +73,8 @@ versions += [
   zkclient: "0.10",
   zookeeper: "3.4.11",
   jfreechart: "1.0.0",
-  mavenArtifact: "3.5.2"
+  mavenArtifact: "3.5.2",
+  zstd: "1.1.1",
 ]
 
 libs += [
@@ -119,5 +120,6 @@ libs += [
   zkclient: "com.101tec:zkclient:$versions.zkclient",
   zookeeper: "org.apache.zookeeper:zookeeper:$versions.zookeeper",
   jfreechart: "jfreechart:jfreechart:$versions.jfreechart",
-  mavenArtifact: "org.apache.maven:maven-artifact:$versions.mavenArtifact"
+  mavenArtifact: "org.apache.maven:maven-artifact:$versions.mavenArtifact",
+  zstd: "com.github.luben:zstd-jni:$versions.zstd",
 ]
